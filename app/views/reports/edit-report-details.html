@@ -1,0 +1,95 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Report details  -  DROITS Prototype
+{% endblock %}
+
+{% block beforeContent %}
+  <a href="javascript:history.go(-1)" class="govuk-back-link">Back</a>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        {% set wreckId = data.wreckId %}
+        {% set currentWreck = data.wrecks[wreckId] %}
+        {% set currentWreckLoc = 'wrecks[' + wreckId + ']' %}
+
+       
+      <h1 class="govuk-heading-xl">
+          Report details for  {{currentWreck['reference'] }} 
+      </h1>
+     
+      <p>
+      
+  <form action="report-view">
+   {{ govukInput({
+  label: {
+    text: "Report Date",
+    classes: "govuk-!-font-weight-bold"
+  },
+  classes: "govuk-input--width-10 ",
+  value: currentWreck['report-date'],
+  id: currentWreckLoc + "['report-date']",
+  name: currentWreckLoc + "['report-date']"
+}) }}
+
+ {{ govukInput({
+  label: {
+    text: "Wreckage found",
+    classes: "govuk-!-font-weight-bold"
+  },
+   classes: "govuk-input--width-10 ",
+  value: currentWreck['wreck-find-date'],
+  id: currentWreckLoc + "['wreck-find-date']",
+  name: currentWreckLoc + "['wreck-find-date']"
+}) }}
+
+{{ govukInput({
+  label: {
+    text: "Longitude",
+    classes: "govuk-!-font-weight-bold"
+  },
+  classes: "govuk-input--width-20",
+  value: currentWreck['longitude'],
+  id: currentWreckLoc + "['longitude']",
+  name: currentWreckLoc + "['longitude']"
+}) }}
+
+{{ govukInput({
+  label: {
+    text: "Latitude",
+    classes: "govuk-!-font-weight-bold"
+  },
+  classes: "govuk-input--width-20",
+  value: currentWreck['latitude'],
+  id: currentWreckLoc + "['latitude']",
+  name: currentWreckLoc + "['latitude']"
+}) }}
+
+{{ govukTextarea({
+  label: {
+    text: "Location description",
+    classes: "govuk-!-font-weight-bold"
+  },
+  value: currentWreck['location-description'],
+  id: currentWreckLoc + "['location-description']",
+  name: currentWreckLoc + "['location-description']"
+}) }}
+
+
+
+{{ govukButton({
+  text: "Save changes"
+}) }}
+
+</form>
+
+
+    </div>
+  </div>
+
+{% endblock %}

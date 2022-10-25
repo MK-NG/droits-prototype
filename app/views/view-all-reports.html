@@ -1,0 +1,211 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  DROITS Prototype
+{% endblock %}
+
+{% block beforeContent %}
+  <a href="javascript:history.go(-1)" class="govuk-back-link">Back</a>
+{% endblock %}
+
+{% block content %}
+{%- from "moj/components/pagination/macro.njk" import mojPagination -%}
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+     <h1 class="govuk-heading-xl"> Active DROIT reports </h1> 
+   </div>
+   </div>
+
+   {% set advancedSearchFilters %}
+      <div class="govuk-grid-row">    
+        <div class="govuk-grid-column-one-third">
+      {{ govukInput({
+        label: {
+          text: "Wreck find date",
+          classes: "govuk-label--s"
+        },
+        hint: {
+          text: "Date from",
+          classes: "small-hint"
+        },
+        id: "",
+        name: ""
+      }) }}
+    </div> 
+        <div class="govuk-grid-column-one-third">
+      {{ govukInput({
+        label: {
+          html: "&#10240;",
+          classes: "govuk-label--s"
+        },
+        hint: {
+          text: "Date to",
+          classes: "small-hint"
+        },
+        id: "",
+        name: ""
+      }) }}
+    </div> 
+    </div>
+       <div class="govuk-grid-row">    
+        <div class="govuk-grid-column-one-third">
+      {{ govukInput({
+        label: {
+          text: "Wreck report date",
+          classes: "govuk-label--s"
+        },
+        hint: {
+          text: "Date from",
+          classes: "small-hint"
+        },
+        id: "",
+        name: ""
+      }) }}
+    </div> 
+        <div class="govuk-grid-column-one-third">
+      {{ govukInput({
+        label: {
+          html: "&#10240;",
+          classes: "govuk-label--s"
+        },
+        hint: {
+          text: "Date to",
+          classes: "small-hint"
+        },
+        id: "",
+        name: ""
+      }) }}
+    </div> 
+    </div>
+    {% endset %}
+
+  <div class="govuk-grid-column-full search-box govuk-!-margin-bottom-8">
+
+      <h2 class="govuk-heading-l"> Filter reports </h2>
+
+      {{ govukInput({
+        label: {
+          text: "Reference number",
+          classes: "govuk-label--s"
+        },
+         classes: "govuk-input--width-20",
+        id: "refNum",
+        name: "refNum"
+      }) }}
+  
+ 
+
+    {{ govukDetails({
+      summaryText: "Advanced filtering",
+      html: advancedSearchFilters
+    }) }}
+
+{{ govukButton({
+  text: "Filter reports",
+  classes: "filter-button"
+}) }}
+  
+    </div>
+
+ <div class="govuk-gird-column-full-width"> 
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+     <h3 class="govuk-heading-m">{{data.wrecks | length}} Active reports </h3>   
+        </div>
+        <div class="govuk-grid-column-one-third">
+    <p> <a style="float:right" href="#"> Export these records (CSV) </a> </p>
+        </div>
+      </div>
+         <table class="govuk-table" data-module="moj-sortable-table">
+
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+
+              <th scope="col" class="govuk-table__header" aria-sort="ascending">Reference</th>
+
+              <th scope="col" class="govuk-table__header" aria-sort="none">Wreck find date</th>
+
+              <th scope="col" class="govuk-table__header" aria-sort="none">Wreck report date</th>
+
+              <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
+
+               <th scope="col" class="govuk-table__header"><span class='govuk-visually-hidden'> Action </span></th>
+
+            </tr>
+          </thead>
+
+          <tbody class="govuk-table__body">  
+          {% for wreckId, wreck in data.wrecks %}
+          <tr class="govuk-table__row">
+
+      <td class="govuk-table__cell">{{wreck['reference']}}</td> 
+
+      <td class="govuk-table__cell">{{wreck['wreck-find-date']}}</td>
+
+      <td class="govuk-table__cell">{{wreck['report-date']}}</td>
+
+      <td class="govuk-table__cell">
+        {% if wreck['status'] == 'complete' %} 
+          <strong class='govuk-tag govuk-tag--turquoise'> Complete </strong> 
+        {% endif %}
+        {% if wreck['status'] == 'actionRequired' %} 
+        <strong class='govuk-tag govuk-tag--red'> Action required </strong>
+        {% endif %}
+
+      </td>
+
+      <td class="govuk-table__cell"><a href="reports/report-view?wreckId={{wreck['id']}}">View <span class='govuk-visually-hidden'>report {{wreck['reference']}} </span> </a></td>
+
+    </tr>
+
+
+
+
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+
+
+
+     {{ mojPagination({
+  items: [{
+    text: '1',
+    href: '/page=1'
+  }, {
+    text: '2',
+    href: '/page=2',
+    selected: true
+  }, {
+    text: '3',
+    href: '/page=3'
+  }, {
+    type: 'dots'
+  }, {
+    text: '5',
+    href: '/page=5'
+  }],
+  results: {
+    count: 30,
+    from: 10,
+    to: 20,
+    text: 'pages'
+  },
+  previous: {
+    text: 'Previous',
+    href: ''
+  },
+  next: {
+    text: 'Next',
+    href: ''
+  }
+}) }}
+
+
+
+
+{% endblock %}

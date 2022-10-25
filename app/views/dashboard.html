@@ -1,0 +1,79 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Dashboard - DROITS Prototype
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-width">
+      <h1 class="govuk-heading-xl">
+        Dashboard
+      </h1>
+      <p>
+  
+{{ govukCards({
+  heading: "Actions",
+  items: [
+    {
+      link: {
+        text: "Create new report",
+        path: "new-report"
+      },
+      description: "Manually enter a report into the system "
+    },
+    {
+      link: {
+        text: "View all reports",
+        path: "view-all-reports"
+      },
+      description: "Find, edit and export existing reports"
+    }
+  ]
+}) }}
+
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+<h2 class="govuk-heading-l"> Stats </h2>
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+
+      <div class="app-home-statuses app-home-statuses--3-up govuk-!-margin-bottom-4">
+
+          <a href="/" class="status-card status-card--awarded">
+          <span class="status-card__count">{{data.wrecks | length}}</span>
+          <span class="status-card__status">Total number of reports</span><span class="govuk-visually-hidden"> View these reports.</span>
+        </a>
+
+         {% set reportsComplete = 0 %}
+     {% for wreckId, wreck in data.wrecks %}
+    {% if wreck['status'] == 'complete' %}
+    {% set reportsComplete = reportsComplete + 1 %}
+    {% endif %}
+    {% endfor %}
+          <a href="/" class="status-card status-card--pending-trn">
+          <span class="status-card__count">{{reportsComplete}}</span>
+          <span class="status-card__status">Report{{ 's are' if reportsComplete > 1 else 'is' }} complete</span><span class="govuk-visually-hidden"> View these reports.</span>
+        </a>
+
+
+    {% set reportsRequireAction = 0 %}
+     {% for wreckId, wreck in data.wrecks %}
+    {% if wreck['status'] == 'actionRequired' %}
+    {% set reportsRequireAction = reportsRequireAction + 1 %}
+    {% endif %}
+    {% endfor %}
+          <a href="view-action-required-reports" class="status-card status-card--withdrawn">
+          <span class="status-card__count">{{reportsRequireAction}}</span>
+          <span class="status-card__status">Report{{ 's' if reportsRequireAction > 1 else ' is'}} requiring an action</span><span class="govuk-visually-hidden"> View these reports.</span>
+        </a>
+        </div>
+      </div>
+      </p>
+    </div>
+  </div>
+
+{% endblock %}

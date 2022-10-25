@@ -1,0 +1,228 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+{{data['reportid']}} -  DROITS Prototype
+{% endblock %}
+
+{% block beforeContent %}
+  <a href="javascript:history.go(-1)" class="govuk-back-link">Back</a>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+
+        {% set wreckId = data.wreckId %}
+        {% set currentWreck = data.wrecks[wreckId] %}
+
+      <h1 class="govuk-heading-xl">
+       {{currentWreck['reference'] }} 
+       {% if currentWreck['status'] == 'complete' %}
+         <strong class='govuk-tag govuk-tag--turquoise'> Complete </strong> 
+        {% endif %}
+        {% if currentWreck['status'] == 'actionRequired' %} 
+        <strong class='govuk-tag govuk-tag--red'> Action required </strong>
+        {% endif %}
+      </h1>
+     
+      <p>
+        {% set topLevelAction %}
+          <h2 class="govuk-heading-m"> Action </h2> 
+          <p> A little bit of top level information here - Outcomes?  </p> 
+
+          {{ govukButton({
+            text: "Primary Action",
+            classes: "govuk-!-margin-right-2 govuk-!-margin-bottom-0"
+          }) }}
+           
+           {{ govukButton({
+            text: "Secondary Action",
+            classes: "govuk-button--secondary  govuk-!-margin-bottom-0"
+          }) }}
+             
+
+        {% endset %}
+
+        {% if currentWreck['status'] != 'complete' %}
+          {{ govukInsetText({
+            html: topLevelAction
+          }) }}
+       {% endif %}
+
+   {{ appSubNavigation({
+        label: 'Sub navigation',
+        items: [{
+          text: 'Details',
+          href: 'details',
+          active: true
+        }, 
+        {
+          text: 'Correspondence',
+          href: 'correspondence?wreckId=' + wreckId
+        },
+        {
+          text: 'Wreck material',
+          href: 'wreck-material?wreckId=' + wreckId
+        },
+        {
+          text: 'History',
+          href: 'history?wreckId=' + wreckId
+        }     
+        ]
+      }) }}
+
+    </div> 
+    </div>
+
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+
+    <h2 class="govuk-heading-l"> Details </h2>
+    <p> <a href=""> Download full report (PDF) </a> </p> 
+
+    {% set longLat %}
+        {{currentWreck['longitude']}} , {{currentWreck['latitude']}}
+    {% endset %}
+
+   
+
+{{ govukSummaryCard({
+  title: 'Report Details',
+  link: 'edit-report-details?wreckId=' + wreckId,
+  rows: [
+    {
+      key: {
+        text: "Report Date"
+      },
+      value: {
+        html:  currentWreck['report-date'] | string
+      }
+    },
+    {
+      key: {
+        text: "Wreck found"
+      },
+      value: {
+        html:  currentWreck['wreck-find-date'] | string
+      }
+      },
+    {
+      key: {
+        text: "Longitude and Latitude"
+      },
+      value: {
+        html: longLat | string
+      }
+      },
+    {
+      key: {
+        text: "Location description"
+      },
+      value: {
+        html:  currentWreck['location-description'] 
+      }
+      }
+    }
+  ]
+) }}
+
+    <div class="govuk-grid-column-two-thirds">
+
+{{ govukSummaryCard({
+  title: 'Vessel Information',
+  link: 'edit-vessel-information?wreckId=' + wreckId,
+  rows: [
+    {
+      key: {
+        text: "Vessel Name"
+      },
+      value: {
+        html:  currentWreck['vessel-name'] 
+      }
+    },
+      {
+      key: {
+        text: "Year of construction"
+      },
+      value: {
+        html:  currentWreck['vessel-construction-year'] | string
+      }
+    },
+      {
+      key: {
+        text: "Depth"
+      },
+      value: {
+        html:  currentWreck['vessel-depth'] | string + ' meters'
+      }
+    },
+      {
+      key: {
+        text: "Year sunk"
+      },
+      value: {
+        html:  currentWreck['vessel-sunk-year'] | string
+      }
+    }     
+    }
+  ]
+) }}
+
+  <div class="govuk-grid-column-two-thirds">
+  {% set address %}
+    {{currentWreck['personal']['address-line-1']}}<br>
+    {{currentWreck['personal']['address-line-2']}}<br>
+    {{currentWreck['personal']['address-town']}}<br>
+    {{currentWreck['personal']['address-county']}}<br>
+    {{currentWreck['personal']['address-postcode']}}<br>
+
+  {% endset %}
+
+{{ govukSummaryCard({
+  title: 'Personal details',
+  link: 'edit-personal-details?wreckId=' + wreckId,
+  rows: [
+    {
+      key: {
+        text: "Full name"
+      },
+      value: {
+        html:  currentWreck['personal']['full-name'] 
+      }
+    },
+      {
+      key: {
+        text: "Email"
+      },
+      value: {
+        html:  currentWreck['personal']['email'] 
+      }
+    },
+      {
+      key: {
+        text: "Telephone number"
+      },
+      value: {
+        html:  currentWreck['personal']['telephone-number'] 
+      }
+    },
+      {
+      key: {
+        text: "Address"
+      },
+      value: {
+        html:  address
+      }
+    }     
+    }
+  ]
+) }}
+  
+
+    </div>
+  </div>
+
+{% endblock %}

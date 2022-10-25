@@ -1,0 +1,32 @@
+<div class="govuk-summary-list__card"><div class="govuk-summary-list__card-title-wrapper">
+  <h2 class="govuk-summary-list__card-title">{{params.title}}</h2>
+    <div class="govuk-summary-list__card-actions">
+        <ul class="govuk-summary-list__card-actions-list">
+          <li class="govuk-summary-list__card-actions-list-item">
+            <a class="govuk-link" href="{{params.link}}"> Edit<span class="govuk-visually-hidden">{{params.title}}</span></a>
+          </li>
+        </ul>
+      </div>
+  </div>
+  <div class="govuk-summary-list__card-content"> 
+     <dl class="govuk-summary-list">
+          {% for row in params.rows %}
+          {% if row %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                {{row.key.text | safe}}
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {% if row.value.action == true %} <span class="summary-card-action">  {{row.value.html | safe}} </span> 
+                {% else%}
+                {{row.value.html | safe}}
+                {% endif %}
+              </dd>
+              </div>
+          {% endif %}
+          {% endfor %}
+            </div>       
+      </dl>
+    </div>
+  </div>
+  

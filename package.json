@@ -1,6 +1,6 @@
 {
-  "name": "govuk-prototype-kit",
-  "description": "Rapidly create HTML prototypes of GOV.UK services",
+  "name": "DROITS",
+  "description": "A prorotpe of the DROITS system",
   "version": "12.2.0",
   "private": true,
   "engines": {
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@govuk-prototype-kit/step-by-step": "^2.0.0",
+    "@ministryofjustice/frontend": "^1.6.0",
     "acorn": "^8.5.0",
     "ansi-colors": "^4.1.1",
     "body-parser": "^1.14.1",

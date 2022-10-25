@@ -1,0 +1,119 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+{{data['reportid']}} -  DROITS Prototype
+{% endblock %}
+
+{% block beforeContent %}
+  <a href="javascript:history.go(-1)" class="govuk-back-link">Back</a>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+
+        {% set wreckId = data.wreckId %}
+        {% set currentWreck = data.wrecks[wreckId] %}
+
+      <h1 class="govuk-heading-xl">
+       {{currentWreck['reference'] }} 
+       {% if currentWreck['status'] == 'complete' %}
+         <strong class='govuk-tag govuk-tag--turquoise'> Complete </strong> 
+        {% endif %}
+        {% if currentWreck['status'] == 'actionRequired' %} 
+        <strong class='govuk-tag govuk-tag--red'> Action required </strong>
+        {% endif %}
+      </h1>
+     
+      <p>
+        {% set topLevelAction %}
+          <h2 class="govuk-heading-m"> Action </h2> 
+          <p> A little bit of top level information here - Outcomes?  </p> 
+
+          {{ govukButton({
+            text: "Primary Action",
+            classes: "govuk-!-margin-right-2 govuk-!-margin-bottom-0"
+          }) }}
+           
+           {{ govukButton({
+            text: "Secondary Action",
+            classes: "govuk-button--secondary  govuk-!-margin-bottom-0"
+          }) }}
+             
+
+        {% endset %}
+
+        {% if currentWreck['status'] != 'complete' %}
+          {{ govukInsetText({
+            html: topLevelAction
+          }) }}
+       {% endif %}
+
+   {{ appSubNavigation({
+        label: 'Sub navigation',
+        items: [{
+          text: 'Details',
+          href: 'report-view?wreckId=' + wreckId
+        }, 
+        {
+          text: 'Correspondence',
+          href: 'correspondence?wreckId=' + wreckId,
+          active: true
+        },
+        {
+          text: 'Wreck material',
+          href: 'wreck-material?wreckId=' + wreckId
+        },
+        {
+          text: 'History',
+          href: 'history?wreckId=' + wreckId
+        }     
+        ]
+      }) }}
+
+    </div> 
+    <div class="govuk-grid-column-two-thirds">
+
+    <h2 class="govuk-heading-l"> Correspondence </h2> 
+
+  
+{{ govukSummaryCard({
+  title: 'Notes',
+  link: 'edit-notes?wreckId=' + wreckId,
+  rows: [
+    {
+      key: {
+        text: "<span class='govuk-visually-hidden'> Date written: </span> 21/11/2022"
+      },
+      value: {
+        html: "Wreckage was smaller than reported, size has been changed and something else has also happened and that's cool"
+      }
+      },
+    {
+      key: {
+        text: "22/11/2022"
+      },
+      value: {
+        html: "<img class='note-image' src='/public/images/wreckage.png'>"
+      }
+    },
+      {
+      key: {
+        text: "<span class='govuk-visually-hidden'> Action </span>"
+      },
+      value: {
+        action: true,
+        html: "<a href='edit-notes?wreckId=" + wreckId + "#newNote'> Add new note </a>"
+      }
+      }
+    }
+  ]
+) }}
+      </p>
+    </div>
+  </div>
+
+{% endblock %}

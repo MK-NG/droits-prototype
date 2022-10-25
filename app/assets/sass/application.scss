@@ -14,5 +14,15 @@ $govuk-assets-path: '/govuk/assets/';
 @import "patterns/pagination";
 @import "patterns/related-items";
 @import "patterns/task-list";
+@import "patterns/custom/custom-styling";
+@import "patterns/custom/cards";
+@import "patterns/custom/subnavigation";
+@import "patterns/custom/stats-grid";
+@import "patterns/custom/summary-card";
+@import "patterns/custom/timeline";
+
+
+
+
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you

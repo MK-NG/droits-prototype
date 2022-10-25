@@ -1,0 +1,197 @@
+{{ govukTable({
+  attributes: {
+    'data-module': 'moj-sortable-table'
+  },
+  head: [
+    {
+      text: "Value 1",
+      attributes: {
+        "aria-sort": "ascending"
+      }
+    },
+    {
+      text: "Value 2",
+      attributes: {
+        "aria-sort": "none"
+      }
+    },
+     {
+      text: "Value 3",
+      attributes: {
+        "aria-sort": "none"
+      }
+    },
+    {
+      text: "Status",
+      attributes: {
+        "aria-sort": "none"
+      }
+    },
+    {
+      html: "<span class='govuk-visually-hidden'> Action </span>"
+    }   
+  ],
+  rows: [
+    [
+      {
+        text: "BD-1"
+      },
+      {
+        text: "6,961 meters",
+        attributes: {
+          "data-sort-value": "6961"
+        }
+      },
+      {
+        text: "R2D2"    
+      },
+      {
+        html: "<strong class='govuk-tag govuk-tag--turquoise'> Complete </strong>",
+        attributes: {
+          "data-sort-value": "0"
+        }
+      },
+       {
+        html: "<a href='/reports/report-view?reportid=BD-1'> View </a>"        
+      }
+    ],
+    [
+      {
+        text: "C1-10P"
+      },
+      {
+        text: "6,194 meters",
+        attributes: {
+          "data-sort-value": "6194"
+        }
+      },
+      {
+        text: "TDH321"
+      },
+      {
+        html: "<strong class='govuk-tag govuk-tag--turquoise'> Complete </strong>",
+        attributes: {
+          "data-sort-value": "0"
+        }
+      },
+      {
+        html: "<a href='/reports/report-view?reportid=C1-10P'> View </a>"        
+      }
+    ],
+    [
+      {
+        text: "FJC231"
+      },
+      {
+        text: "5,642 meters",
+        attributes: {
+          "data-sort-value": "5642"
+        }
+      },
+      {
+        text: "NCM123"
+      },
+      {
+        html: "<strong class='govuk-tag govuk-tag--red'> Action required </strong>",
+        attributes: {
+          "data-sort-value": "1"
+        }
+      },
+      {
+        html: "<a href=''> View </a>"        
+      }
+    ],
+    [
+      {
+        text: "4-LOM"
+      },
+      {
+        text: "8,850 meters",
+        attributes: {
+          "data-sort-value": "8850"
+        }
+      },
+      {
+        text: "R2D2"
+      },
+      {
+        html: "<strong class='govuk-tag govuk-tag--red'> Action required </strong>",
+        attributes: {
+          "data-sort-value": "1"
+        }
+      },
+      {
+        html: "<a href=''> View </a>"        
+      }
+    ],
+    [
+      {
+        text: "C3PO"
+      },
+      {
+        text: "5,895 meters",
+        attributes: {
+          "data-sort-value": "5895"
+        }
+      },
+      {
+        text: "AP-5"
+      },
+      {
+      html: "<strong class='govuk-tag govuk-tag--turquoise'> Complete </strong>",
+        attributes: {
+          "data-sort-value": "0"
+        }
+      },
+      {
+        html: "<a href=''> View </a>"        
+      }
+    ],
+    [
+      {
+        text: "MSN33"
+      },
+      {
+        text: "4,884 meters",
+        attributes: {
+          "data-sort-value": "4884"
+        }
+      },
+      {
+        text: "R5-D4"
+      },
+      {
+       html: "<strong class='govuk-tag govuk-tag--turquoise'> Complete </strong>",
+        attributes: {
+          "data-sort-value": "0"
+        }
+      },
+       {
+        html: "<a href=''> View </a>"        
+      }
+    ],
+    [
+      {
+        text: "IG-11"
+      },
+      {
+        text: "4,897 meters",
+        attributes: {
+          "data-sort-value": "4897"
+        }
+      },
+      {
+        text: "EV-9D9"
+      },
+      {
+        html: "<strong class='govuk-tag govuk-tag--turquoise'> Complete </strong>",
+        attributes: {
+          "data-sort-value": "0"
+        }
+      },
+      {
+        html: "<a href=''> View </a>"        
+      }
+    ]
+  ]
+}) }}
