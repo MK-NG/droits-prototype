@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block beforeContent %}
-  <a href="javascript:history.go(-1)" class="govuk-back-link">Back</a>
+  <a href="../view-all-reports" class="govuk-back-link">Back</a>
 {% endblock %}
 
 {% block content %}
@@ -56,7 +56,7 @@
         label: 'Sub navigation',
         items: [{
           text: 'Details',
-          href: 'details'
+          href: 'report-view?wreckId=' + wreckId
         }, 
         {
           text: 'Correspondence',
@@ -64,12 +64,12 @@
         },
         {
           text: 'Wreck material',
-          href: 'wreck-material?wreckId=' + wreckId,
-          active: true
+          href: 'wreck-material?wreckId=' + wreckId
         },
         {
           text: 'History',
-          href: 'history?wreckId=' + wreckId
+          href: 'history?wreckId=' + wreckId,
+          active: true
         }     
         ]
       }) }}
@@ -80,64 +80,12 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-    <h2 class="govuk-heading-l"> Wreck Material </h2>
+    <h2 class="govuk-heading-l"> History </h2>
 
-    {% set image %}
-      <img src="https://cdn.mos.cms.futurecdn.net/EiBUChm7wquPvNWMCNiX9j-320-80.jpg">
-      <br>
-      {{currentWreck['wreck-materials'][0]['originalFilename']}}
-    {% endset%}
-
-    {% set storageAddress %}
-      {{currentWreck['wreck-materials'][0]['storage-address'] | capitalize }}<br><br>
-      {{currentWreck['wreck-materials'][0]['address-details']['address-line-1']}}<br>
-      {{currentWreck['wreck-materials'][0]['address-details']['address-line-2']}}<br>
-      {{currentWreck['wreck-materials'][0]['address-details']['address-town']}}<br>
-      {{currentWreck['wreck-materials'][0]['address-details']['address-county']}}<br>
-      {{currentWreck['wreck-materials'][0]['address-details']['address-postcode']}}<br>
-    {% endset %}
-
-{{ govukSummaryCard({
-  title:  currentWreck['wreck-materials'][0]['description']  ,
-  link: 'edit-report-details?wreckId=' + wreckId,
-  rows: [
-    {
-      key: {
-        text: "Quantity"
-      },
-      value: {
-        html: currentWreck['wreck-materials'][0]['quantity']
-      }
-    },
-    {
-      key: {
-        text: "Value"
-      },
-      value: {
-        html: currentWreck['wreck-materials'][0]['value']
-      }
-      },
-    {
-      key: {
-        text: "Image"
-      },
-      value: {
-        html: image
-      }
-      },
-    {
-      key: {
-        text: "Storage Address"
-      },
-      value: {
-        html: storageAddress
-      }
-      }
-    }
-  ]
-) }}
-
-    
+    {{ appTimeline({
+    headingLevel: 3,
+    items: timeline
+  })}}
   
 
     </div>
